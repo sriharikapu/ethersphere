@@ -1,0 +1,13 @@
+.DS_Store
+.env
+.tmp/
+node_modules/
+public/bundle.js
+/public/bundle.js.map
+server.js
+dist/
+.idea
+yarn-error.log
+/npm-debug.log
+.idea
+/data

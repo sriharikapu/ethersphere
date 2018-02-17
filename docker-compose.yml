@@ -1,0 +1,29 @@
+version: "2"
+services:
+    web:
+        tty: true
+        stdin_open: true
+        build:
+            context: .
+            dockerfile: ./scripts/docker/Dockerfile
+        command: "/bin/bash"
+        volumes:
+            - ./:/app
+        ports:
+            - "3000:3000"
+            - "9229:9229"
+        links:
+            - mongo
+            - redis
+        environment:
+            - NODE_ENV="development"
+    mongo:
+        image: mongo
+        ports:
+            - "27018:27017"
+        volumes:
+          - ./scripts/db:/host-db
+    redis:
+        image: redis
+        ports:
+            - "6379:6379"

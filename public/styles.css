@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css?family=Material+Icons|Roboto:100,300,400,400i,500,700,900|Titillium+Web:200,300,400,700,900');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: hsl(204, 29%, 97%);
+}
+
+div {
+  box-sizing: border-box;
+}
+
+svg {
+  fill: currentColor;
+}
+
+#app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 60px;
+}
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    display: none;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: hsla(0, 0%, 100%, .1);
+}
+
+::-webkit-scrollbar:vertical {
+  display: none;
+}
+
+::-webkit-scrollbar-corner {
+  display: none;
+}
+
+.percentage-enter {
+  opacity: 0.5;
+}
+
+.percentage-enter.percentage-enter-active {
+  opacity: 1;
+  transition: opacity .8s ease-in-out;
+}
+
+
+/* =============================================================================
+=    Circlular animated checkmark icon
+============================================================================= */
+.svg-success {
+  stroke-width: 2px;
+  stroke: #8EC343;
+  fill: none;
+}
+.svg-success path {
+  stroke-dasharray: 17px, 17px;
+  stroke-dashoffset: 0px;
+  -webkit-animation: checkmark 0.25s ease-in-out 0.7s backwards;
+  animation: checkmark 0.25s ease-in-out 0.7s backwards;
+}
+.svg-success circle {
+  stroke-dasharray: 76px, 76px;
+  stroke-dashoffset: 0px;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  -webkit-animation: checkmark-circle 0.6s ease-in-out forwards;
+  animation: checkmark-circle 0.6s ease-in-out forwards;
+}
+
+@keyframes checkmark {
+  0% {
+    stroke-dashoffset: 17px;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes checkmark-circle {
+  0% {
+    stroke-dashoffset: 76px;
+  }
+  100% {
+    stroke-dashoffset: 0px;
+  }
+}
+
+/* =============================================================================
+=    Animation helpers
+============================================================================= */
+@keyframes flash {
+    0%, 100%, 50% {
+        opacity: 1
+    }
+    25%,
+    75% {
+        opacity: 0
+    }
+}
+.flash {
+    animation-name: flash
+}
+@keyframes pulse {
+    0%, 100% {
+        transform: scale3d(1, 1, 1)
+    }
+    50% {
+        transform: scale3d(1.05, 1.05, 1.05)
+    }
+}
+.pulse {
+    animation-name: pulse
+}
+@keyframes rubberBand {
+    0%, 100% {
+        transform: scale3d(1, 1, 1)
+    }
+    30% {
+        transform: scale3d(1.25, .75, 1)
+    }
+    40% {
+        transform: scale3d(.75, 1.25, 1)
+    }
+    50% {
+        transform: scale3d(1.15, .85, 1)
+    }
+    65% {
+        transform: scale3d(.95, 1.05, 1)
+    }
+    75% {
+        transform: scale3d(1.05, .95, 1)
+    }
+}
+.rubberBand {
+    animation-name: rubberBand
+}
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+.bounce {
+    animation-name: bounce;
+}
+
+
+/* =============================================================================
+=    Adblock message
+============================================================================= */
+.msg-ab {
+  width: 100%;
+  height: 48px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 99999;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: hsl(201, 87%, 54%);
+}
+
+img.msg-ab-img {
+  margin-left: 100px;
+  max-height: 85%;
+}
+
+.msg-ab-wrapper {
+  color: white;
+  margin-left: 10px;
+  -ms-flex-negative: 2;
+      flex-shrink: 2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+h2.msg-ab-title {
+  margin: 0;
+  font-size: 14px;
+}
+
+p.msg-ab-text {
+  margin: 0;
+  font-weight: 300;
+  font-size: 11px;
+  max-width: 737px;
+  color: black;
+  -webkit-text-stroke: 0.01px;
+}
+
+.ReactModal__Content {
+  max-width: 500px;
+}
+
+@media(max-width: 768px) {
+  .ReactModal__Content {
+    max-width: 350px;
+  }
+}
