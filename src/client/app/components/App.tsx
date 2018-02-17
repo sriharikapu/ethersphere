@@ -10,7 +10,7 @@ import muiTheme from 'client/app/lib/muiTheme';
 import PrivateRoute from 'client/app/components/PrivateRoute';
 import Header from 'client/app/components/Header';
 import Home from 'client/app/components/Home';
-import AddBlockScreen from 'client/app/components/AddBlockScreen';
+import ExploreScreen from 'client/app/components/ExploreScreen';
 import ManageBlockScreen from 'client/app/components/ManageBlockScreen';
 import MobileMenu from './MobileMenu';
 import Toaster from './Toaster';
@@ -41,7 +41,7 @@ const App = ({
         <Header />
         <Switch>
           <Route exact path="/" component={Home as any} />
-          <Route exact path="/add" component={AddBlockScreen as any} />
+          <Route exact path="/explore" component={ExploreScreen as any} />
           <Route exact path="/manage" component={ManageBlockScreen as any} />
         </Switch>
       </div>

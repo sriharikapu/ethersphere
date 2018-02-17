@@ -9,8 +9,8 @@ export default function Header() {
         ΞTHERSPHERE
       </Title>
       <Navigation>
-        <Link to="/add">Add block</Link>
-        <Link to="/manage">Manage</Link>
+        <NavLink to="/explore">Explore</NavLink>
+        <NavLink to="/manage">My Blocks</NavLink>
       </Navigation>
     </Container>
   )
@@ -33,4 +33,13 @@ const Title = styled.span`
 const Navigation = styled.div`
   display: flex;
   align-items: center;
+`
+
+
+const NavLink = styled(Link)`
+  color: hsl(0, 0%, 100%);
+  text-decoration: none;
+  text-transform: uppercase;
+  margin-left: 15px;
+  font-size: 13px;
 `

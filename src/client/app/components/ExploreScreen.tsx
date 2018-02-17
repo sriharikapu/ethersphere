@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function AddBlockScreen() {
+export default function ExploreScreen() {
   return (
     <div>
       add
