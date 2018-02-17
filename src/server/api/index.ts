@@ -13,9 +13,9 @@ const provider = new Web3HttpProvider(providerUri)
 let instance = null
 
 async function setInstance () {
-  instance = tc(ABI)
-  instance.setProvider(provider)
-  instance = await instance.deployed()
+  // instance = tc(ABI)
+  // instance.setProvider(provider)
+  // instance = await instance.deployed()
 }
 
 async function getData(opts) {

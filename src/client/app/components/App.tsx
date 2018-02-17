@@ -8,6 +8,7 @@ import * as selectors from 'client/app/selectors';
 import { MuiThemeProvider } from 'material-ui/styles';
 import muiTheme from 'client/app/lib/muiTheme';
 import PrivateRoute from 'client/app/components/PrivateRoute';
+import Home from 'client/app/components/Home';
 import MobileMenu from './MobileMenu';
 import Toaster from './Toaster';
 
@@ -35,6 +36,7 @@ const App = ({
         {isToasterVisible && <Toaster message={toasterMessage as string} title={toasterTitle as string} />}
 
         <Switch>
+          <Route exact path="/" component={Home as any} />
         </Switch>
       </div>
     </MuiThemeProvider>
