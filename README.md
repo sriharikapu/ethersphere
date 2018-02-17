@@ -1,4 +1,4 @@
-# CoinCircle Web App
+# Ethersphere
 
 ## Running the app
 
