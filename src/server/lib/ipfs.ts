@@ -58,27 +58,10 @@ function uploadFromUrl(url) {
   })
 }
 
-async function getJson (ipfsHash) {
-  let json = {}
-
-  if (!ipfsHash) {
-    return json
-  }
-
-  try {
-    json = await (await window.fetch(ipfsUrl(ipfsHash))).json()
-  } catch (error) {
-
-  }
-
-  return json
-}
-
 module.exports = {
   uploadJson,
   uploadFile,
   uploadFromUrl,
   getJson,
-  ipfsUrl,
-  getJson
+  ipfsUrl
 }
