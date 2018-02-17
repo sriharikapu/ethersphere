@@ -8,7 +8,10 @@ import * as selectors from 'client/app/selectors';
 import { MuiThemeProvider } from 'material-ui/styles';
 import muiTheme from 'client/app/lib/muiTheme';
 import PrivateRoute from 'client/app/components/PrivateRoute';
+import Header from 'client/app/components/Header';
 import Home from 'client/app/components/Home';
+import AddBlockScreen from 'client/app/components/AddBlockScreen';
+import ManageBlockScreen from 'client/app/components/ManageBlockScreen';
 import MobileMenu from './MobileMenu';
 import Toaster from './Toaster';
 
@@ -35,8 +38,11 @@ const App = ({
         {isMenuVisible && <MobileMenu />}
         {isToasterVisible && <Toaster message={toasterMessage as string} title={toasterTitle as string} />}
 
+        <Header />
         <Switch>
           <Route exact path="/" component={Home as any} />
+          <Route exact path="/add" component={AddBlockScreen as any} />
+          <Route exact path="/manage" component={ManageBlockScreen as any} />
         </Switch>
       </div>
     </MuiThemeProvider>
