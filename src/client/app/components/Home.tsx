@@ -14,23 +14,39 @@ interface Props {
 
 interface State {
   latlngkey: string;
-  availability: boolean;
-  checkedBlock: string;
+  coords: any;
+	availability: boolean;
+	checkedBlock: string;
 }
 
 export default class Home extends React.Component<Props, State> {
 
   state = {
     latlngkey: null,
+		coords: null,
     availability: false,
     checkedBlock: ''
+  }
+
+	getLocation() {
+    if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition((pos) => {
+				this.setState({
+					coords: pos.coords
+				})
+			})
+    }
+	}
+
+  componentWillount() {
+		this.getLocation()
   }
 
   componentDidMount() {
     (window as any).mapboxgl.accessToken = 'pk.eyJ1IjoiY29vcGVybSIsImEiOiJjamRyNGd4a3MwNXJuMnFueXZxbnowajJ5In0.5SoId28cDuTqHPRP_2iA2w';
     var map = new (window as any).mapboxgl.Map({
       style: 'mapbox://styles/mapbox/dark-v9',
-      center: [-74.0066, 40.7135],
+      center: [-104.987143, 39.732340],
       zoom: 15.5,
       pitch: 45,
       bearing: -17.6,
@@ -174,12 +190,12 @@ export default class Home extends React.Component<Props, State> {
           Own your block of the earth
         </Headline>
         <PolySearch />
+        <NewBlockForm latlngkey={latlngkey} />
         {this.state.checkedBlock &&
           <Availability>
             Block {this.state.checkedBlock} {this.state.availability && 'is' || 'is not '} available
           </Availability>
         }
-        <NewBlockForm latlngkey={latlngkey} />
         <div id="map" style={mapStyle} />
       </Container>
     )

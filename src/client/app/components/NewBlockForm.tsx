@@ -6,6 +6,7 @@ import BigNumber from 'bignumber.js';
 import abi from 'shared/ethereum/abi';
 import Web3 from 'web3';
 import settings from 'settings';
+import { uploadFromUrl } from 'client/app/lib/ipfs'
 
 //const provider = new Web3.providers.HttpProvider(settings.ETHEREUM_NODE_URL);
 const web3 = new Web3((window as any).web3.currentProvider);
@@ -20,21 +21,31 @@ interface state {}
 export default class NewBlockForm extends React.Component<any, any> {
   state = {
     message: '',
-    txHash: ''
+    photoUrl: '',
+    txHash: '',
+    loading: false
   }
 
   render() {
     const { latlngkey } = this.props
-    const { message, txHash } = this.state
+    const { message, photoUrl, txHash, loading } = this.state
+
+    let etherscanUrl = ''
+    if (txHash) {
+      etherscanUrl = `https://kovan.etherscan.io/tx/${txHash}`
+    }
 
     return (
       <Container>
         <Form onSubmit={event => this.handleSubmit(event)}>
           <Input type="text" placeholder="message" value={message} onChange={event => this.handleMessage(event)} />
-          <Button type="submit">Submit</Button>
+          <Input type="text" placeholder="image url (optional)" value={photoUrl} onChange={event => this.handlePhotoUrlChange(event)} />
+          <Button type="submit">
+          {loading ? 'Submitting...' : 'Submit'}
+          </Button>
         </Form>
         <TxHash>
-        {txHash}
+        {txHash && <a href={etherscanUrl} target="_blank">{etherscanUrl}</a>}
         </TxHash>
       </Container>
     )
@@ -46,6 +57,12 @@ export default class NewBlockForm extends React.Component<any, any> {
     })
   }
 
+  handlePhotoUrlChange(event) {
+    this.setState({
+      photoUrl: event.target.value
+    })
+  }
+
   handleSubmit(event) {
     event.preventDefault()
 
@@ -54,9 +71,32 @@ export default class NewBlockForm extends React.Component<any, any> {
 
   async sendTx() {
     const { latlngkey } = this.props
-    const { message } = this.state
+    const { message, photoUrl } = this.state
+    let photoIpfsHash = ''
+
+    if (!latlngkey) {
+      alert('please click on a location')
+      return
+    }
+
+    this.setState({
+      loading: true
+    })
+
     try {
-      const tx = await contract.methods.claimPlotMultipleWithData([latlngkey], '0', message, '', '', '').send({
+      if (photoUrl) {
+        const hashes = await uploadFromUrl(photoUrl)
+        if (hashes.length) {
+          photoIpfsHash = hashes[0].hash
+        }
+      }
+    } catch (error) {
+      console.error(error)
+    }
+
+    try {
+
+      const tx = await contract.methods.claimPlotMultipleWithData([latlngkey], '0', message, '', photoIpfsHash, '').send({
         value: web3.utils.toWei('0.015', 'ether'),
         from: (await web3.eth.getAccounts())[0]
       })
@@ -67,6 +107,9 @@ export default class NewBlockForm extends React.Component<any, any> {
       console.error(err)
     }
 
+    this.setState({
+      loading: false
+    })
   }
 }
 
@@ -86,6 +129,10 @@ const TxHash = styled.div`
   display: inline-block;
   padding: 10px;
   color: #fff;
+  font-size: 12px;
+  & a {
+    color: #a5bac7;
+  }
 `
 
 const Input = styled.input`
