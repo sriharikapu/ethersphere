@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import * as utm from 'utm';
+import encodeUTM from 'shared/encodeUTM';
+import getGeofence from 'shared/geofence';
 
 export default class Home extends React.Component {
 
@@ -17,7 +20,7 @@ export default class Home extends React.Component {
 
     // The 'building' layer in the mapbox-streets vector source contains building-height
     // data from OpenStreetMap.
-    map.on('load', function() {
+    map.on('load', () => {
       // Insert the layer beneath any symbol layer.
       var layers = map.getStyle().layers;
 
@@ -28,6 +31,15 @@ export default class Home extends React.Component {
           break;
         }
       }
+
+      map.on('click', (e) => {
+        const { lng, lat } = e.lngLat;
+        const utmVal = utm.fromLatLon(lat, lng);
+        const encoded = encodeUTM(utmVal);
+        const geofence = getGeofence(lat, lng);
+
+        console.log(lng, lat, encoded.toFixed(0), geofence.map(bn => bn.toFixed(0)));
+      });
 
       map.addLayer({
         'id': '3d-buildings',
@@ -54,6 +66,65 @@ export default class Home extends React.Component {
         'fill-extrusion-opacity': .2
       }
     }, labelLayerId);
+
+
+    map.addLayer({
+      'id': 'maine',
+      'type': 'fill-extrusion',
+      'source': {
+        'type': 'geojson',
+        'data': {
+          'type': 'Feature',
+          'geometry': {
+            'type': 'Polygon',
+            'coordinates': [
+              [
+                [-67.13734351262877, 45.137451890638886],
+                [-66.96466, 44.8097],
+                [-68.03252, 44.3252],
+                [-69.06, 43.98],
+                [-70.11617, 43.68405],
+                [-70.64573401557249, 43.090083319667144],
+                [-70.75102474636725, 43.08003225358635],
+                [-70.79761105007827, 43.21973948828747],
+                [-70.98176001655037, 43.36789581966826],
+                [-70.94416541205806, 43.46633942318431],
+                [-71.08482, 45.3052400000002],
+                [-70.6600225491012, 45.46022288673396],
+                [-70.30495378282376, 45.914794623389355],
+                [-70.00014034695016, 46.69317088478567],
+                [-69.23708614772835, 47.44777598732787],
+                [-68.90478084987546, 47.184794623394396],
+                [-68.23430497910454, 47.35462921812177],
+                [-67.79035274928509, 47.066248887716995],
+                [-67.79141211614706, 45.702585354182816],
+                [-67.13734351262877, 45.137451890638886]
+              ]
+            ]
+          }
+        }
+      },
+      'paint': {
+        'fill-extrusion-color': '#088',
+
+        // use an 'interpolate' expression to add a smooth transition effect to the
+        // buildings as the user zooms in
+        'fill-extrusion-height': 1500,
+      'fill-extrusion-base': 0,
+      'fill-extrusion-opacity': .2
+    }
+    });
+
+    // When the user moves their mouse over the states-fill layer, we'll update the filter in
+    // the state-fills-hover layer to only show the matching state, thus making a hover effect.
+    map.on("mousemove", "state-fills", function(e) {
+        map.setFilter("state-fills-hover", ["==", "name", e.features[0].properties.name]);
+    });
+
+    // Reset the state-fills-hover layer's filter when the mouse leaves the layer.
+    map.on("mouseleave", "state-fills", function() {
+        map.setFilter("state-fills-hover", ["==", "name", ""]);
+    });
   });
   }
 

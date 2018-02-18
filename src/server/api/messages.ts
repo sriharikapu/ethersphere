@@ -1,5 +1,6 @@
 import app from 'server/app';
 import Message from 'server/models/Message';
+import nearHandler from './near';
 
 // type Payload = {
 //   lat: any,
@@ -29,3 +30,6 @@ app.get('/api/messages/all', async function(req, res) {
     throw Error(err.message);
   }
 })
+
+
+app.get('/api/messages/near', nearHandler);

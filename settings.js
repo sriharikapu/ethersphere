@@ -24,7 +24,7 @@ module.exports = Object.assign({}, settingsPublic, {
   MONGO_USERNAME: process.env.MONGO_USERNAME,
   MONGO_PASSWORD: process.env.MONGO_PASSWORD,
   REDIS_URI: process.env.REDIS_URI || 'redis://redis:6379/0',
-  ETHEREUM_NODE_URL: process.env.ETHEREUM_NODE_URL || 'https://mainnet.infura.io'
+  ETHEREUM_NODE_URL: process.env.ETHEREUM_NODE_URL || 'https://kovan.infura.io'
 });
 
 function isDebug() {
