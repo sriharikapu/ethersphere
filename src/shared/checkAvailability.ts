@@ -10,4 +10,7 @@ const contract = new web3.eth.Contract(abi, settings.CONTRACT_ADDRESS);
 export default (blockId: BigNumber) => web3.eth.call({
     to: settings.CONTRACT_ADDRESS,
     data: contract.methods.ownerOf(blockId.toFixed(0)).encodeABI()
-}).then(address => address === '0x')
+}).then(address => {
+  console.log(address)
+  return address === '0x'
+})
