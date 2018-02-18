@@ -174,7 +174,8 @@ export default class PolySearch extends React.Component {
 
     return (
       <Container>
-        <Toggler onClick={event => this.handleToggle(event)}>Search objects</Toggler>
+        {!show &&
+        <Toggler onClick={event => this.handleToggle(event)}>Search objects</Toggler>}
         {ipfsHash}
         {show &&
         <ToggleContainer>
@@ -210,6 +211,7 @@ const Container = styled.div`
 const Toggler = styled.a`
   cursor: pointer;
   color: #475a84;
+  font-size: 12px;
 `
 
 const ToggleContainer = styled.div`
