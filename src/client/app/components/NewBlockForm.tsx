@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import * as utm from 'utm';
 import encodeUTM from 'shared/encodeUTM';
 import BigNumber from 'bignumber.js';
-import abi from 'server/lib/ethereum/abi';
+import abi from 'shared/ethereum/abi';
 import Web3 from 'web3';
 import settings from 'settings';
 import { uploadFromUrl } from 'client/app/lib/ipfs'
@@ -45,7 +45,7 @@ export default class NewBlockForm extends React.Component<any, any> {
           </Button>
         </Form>
         <TxHash>
-          <a href={etherscanUrl} target="_blank">{etherscanUrl}</a>
+        {txHash && <a href={etherscanUrl} target="_blank">{etherscanUrl}</a>}
         </TxHash>
       </Container>
     )
@@ -95,6 +95,7 @@ export default class NewBlockForm extends React.Component<any, any> {
     }
 
     try {
+
       const tx = await contract.methods.claimPlotMultipleWithData([latlngkey], '0', message, '', photoIpfsHash, '').send({
         value: web3.utils.toWei('0.015', 'ether'),
         from: (await web3.eth.getAccounts())[0]
