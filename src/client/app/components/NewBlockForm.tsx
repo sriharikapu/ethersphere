@@ -22,22 +22,30 @@ export default class NewBlockForm extends React.Component<any, any> {
   state = {
     message: '',
     photoUrl: '',
-    txHash: ''
+    txHash: '',
+    loading: false
   }
 
   render() {
     const { latlngkey } = this.props
-    const { message, photoUrl, txHash } = this.state
+    const { message, photoUrl, txHash, loading } = this.state
+
+    let etherscanUrl = ''
+    if (txHash) {
+      etherscanUrl = `https://kovan.etherscan.io/tx/${txHash}`
+    }
 
     return (
       <Container>
         <Form onSubmit={event => this.handleSubmit(event)}>
           <Input type="text" placeholder="message" value={message} onChange={event => this.handleMessage(event)} />
           <Input type="text" placeholder="image url (optional)" value={photoUrl} onChange={event => this.handlePhotoUrlChange(event)} />
-          <Button type="submit">Submit</Button>
+          <Button type="submit">
+          {loading ? 'Submitting...' : 'Submit'}
+          </Button>
         </Form>
         <TxHash>
-        {txHash}
+          <a href={etherscanUrl} target="_blank">{etherscanUrl}</a>
         </TxHash>
       </Container>
     )
@@ -71,6 +79,10 @@ export default class NewBlockForm extends React.Component<any, any> {
       return
     }
 
+    this.setState({
+      loading: true
+    })
+
     try {
       if (photoUrl) {
         const hashes = await uploadFromUrl(photoUrl)
@@ -94,6 +106,9 @@ export default class NewBlockForm extends React.Component<any, any> {
       console.error(err)
     }
 
+    this.setState({
+      loading: false
+    })
   }
 }
 
@@ -113,6 +128,10 @@ const TxHash = styled.div`
   display: inline-block;
   padding: 10px;
   color: #fff;
+  font-size: 12px;
+  & a {
+    color: #a5bac7;
+  }
 `
 
 const Input = styled.input`
