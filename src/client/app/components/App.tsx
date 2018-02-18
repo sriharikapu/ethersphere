@@ -43,6 +43,7 @@ const App = ({
           <Route exact path="/" component={Home as any} />
           <Route exact path="/explore" component={ExploreScreen as any} />
           <Route exact path="/manage" component={ManageBlockScreen as any} />
+          <a href="https://github.com/ethersphere-project" target="_blank">Github</a>
         </Switch>
       </div>
     </MuiThemeProvider>

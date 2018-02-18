@@ -118,11 +118,14 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 40px;
+  width: 100%;
 `
 
 const Form = styled.form`
   display: block;
-  margin-top: 20px;
+  margin: 20px auto 0 auto;
+  width: 100%;
+  max-width: 300px;
 `
 
 const TxHash = styled.div`
@@ -140,10 +143,10 @@ const Input = styled.input`
   display: block;
   border: 0;
   padding: 10px;
-  background: #00000073;
+  background: #2e3442;
   color: #fff;
   font-size: 16px;
-  width: 200px;
+  width: 100%;
 `
 
 const Button = styled.button`
