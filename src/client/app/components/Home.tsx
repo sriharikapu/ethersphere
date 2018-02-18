@@ -13,19 +13,35 @@ interface Props {
 
 interface State {
   latlngkey: string;
+  coords: any;
 }
 
 export default class Home extends React.Component<Props, State> {
 
   state = {
     latlngkey: null,
+		coords: null
   }
+
+	getLocation() {
+    if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition((pos) => {
+				this.setState({
+					coords: pos.coords
+				})
+			})
+    }
+	}
+
+  componentWillount() {
+		this.getLocation()
+	}
 
   componentDidMount() {
     (window as any).mapboxgl.accessToken = 'pk.eyJ1IjoiY29vcGVybSIsImEiOiJjamRyNGd4a3MwNXJuMnFueXZxbnowajJ5In0.5SoId28cDuTqHPRP_2iA2w';
     var map = new (window as any).mapboxgl.Map({
       style: 'mapbox://styles/mapbox/dark-v9',
-      center: [-74.0066, 40.7135],
+      center: [-104.987143, 39.732340],
       zoom: 15.5,
       pitch: 45,
       bearing: -17.6,

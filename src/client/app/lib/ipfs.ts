@@ -59,7 +59,7 @@ function uploadFromUrl(url) {
   })
 }
 
-module.exports = {
+export {
   uploadJson,
   uploadFile,
   uploadFromUrl,

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { debounce } from 'lodash'
 import { Flex, Box } from 'grid-styled'
-import { uploadFromUrl } from '../lib/ipfs'
+import { uploadFromUrl } from 'client/app/lib/ipfs'
 
 export default class PolySearch extends React.Component {
 
@@ -76,19 +76,19 @@ export default class PolySearch extends React.Component {
 				if (format !== undefined) {
           image.onclick = async () => {
             try {
-          this.setState({
-            ipfsHash : null
-          }, async () => {
-            const assetUri = format.root.url
-            const hashes = await uploadFromUrl(assetUri)
-            if (hashes.length) {
               this.setState({
-                ipfsHash : hashes[0].hash
+                ipfsHash : null
+              }, async () => {
+                const assetUri = format.root.url
+                const hashes = await uploadFromUrl(assetUri)
+                if (hashes.length) {
+                  this.setState({
+                    ipfsHash : hashes[0].hash
+                  })
+                }
               })
-            }
-          })
             } catch (error) {
-
+              console.error(error)
             }
 
 						// Remove previous results
