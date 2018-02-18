@@ -86,7 +86,7 @@ export default class NewBlockForm extends React.Component<any, any> {
     try {
       if (photoUrl) {
         const hashes = await uploadFromUrl(photoUrl)
-        if (hashes.length) {
+        if ((hashes as any).length) {
           photoIpfsHash = hashes[0].hash
         }
       }
