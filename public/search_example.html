@@ -81,28 +81,21 @@
 			var camera = new THREE.PerspectiveCamera( 60, WIDTH / HEIGHT, 0.01, 100 );
 			camera.position.set( 5, 3, 5 );
 			camera.lookAt( 0, 1.5, 0 );
-
 			var scene = new THREE.Scene();
 			scene.background = new THREE.Color( 0x222222 );
-
 			scene.add( new THREE.GridHelper( 10, 10 ) );
-
 			var ambient = new THREE.HemisphereLight( 0xbbbbff, 0x886666, 0.75 );
 			ambient.position.set( -0.5, 0.75, -1 );
 			scene.add( ambient );
-
 			var light = new THREE.DirectionalLight( 0xffffff, 0.75 );
 			light.position.set( 1, 0.75, 0.5 );
 			scene.add( light );
-
 			var container = new THREE.Group();
 			scene.add( container );
-
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setPixelRatio( window.devicePixelRatio );
 			renderer.setSize( WIDTH, HEIGHT );
 			viewer.appendChild( renderer.domElement );
-
 			function animate() {
 				var time = performance.now() / 5000;
 				camera.position.x = Math.sin( time ) * 5;
@@ -110,9 +103,7 @@
 				camera.lookAt( 0, 1.5, 0 );
 				renderer.render( scene, camera );
 				requestAnimationFrame( animate );
-
 			}
-
 			requestAnimationFrame( animate );
 			const API_KEY = 'AIzaSyAeKtA5Mh6WZPbocdSV7JPoyTDIgo6R3a4'
 			function searchPoly( keywords, onLoad ) {
