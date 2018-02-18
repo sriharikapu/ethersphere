@@ -71,7 +71,7 @@
     "truffle-contract": "^3.0.3",
     "typesafe-actions": "^1.1.2",
     "utility-types": "^1.0.0",
-    "web3": "0.20.2",
+    "web3": "^1.0.0-beta.30",
     "web3-eth-abi": "^1.0.0-beta.26",
     "web3-providers-http": "^1.0.0-beta.30",
     "winston": "^2.3.1",
