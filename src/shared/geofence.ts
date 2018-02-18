@@ -9,7 +9,7 @@ import encodeUTM from './encodeUTM';
  */
 export default function geofence(latitude: number, longitude: number): BigNumber[] {
   const initialPoint: PositionAsDecimal = { latitude, longitude };
-  const dist = 30;
+  const dist = 20;
   const bearingTopRight = 45;
   const bearingBottomLeft = 225;
   const topRight = geolib.computeDestinationPoint(initialPoint, dist, bearingTopRight);

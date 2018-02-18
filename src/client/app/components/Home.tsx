@@ -6,8 +6,14 @@ import getGeofence from 'shared/geofence';
 import BigNumber from 'bignumber.js';
 import PolySearch from './PolySearch.jsx';
 import decodeToUTM from 'shared/decode';
+import checkAvailability from 'shared/checkAvailability';
 
 export default class Home extends React.Component {
+
+  state = {
+    availability: false,
+    checkedBlock: ''
+  }
 
   componentDidMount() {
     (window as any).mapboxgl.accessToken = 'pk.eyJ1IjoiY29vcGVybSIsImEiOiJjamRyNGd4a3MwNXJuMnFueXZxbnowajJ5In0.5SoId28cDuTqHPRP_2iA2w';
@@ -40,8 +46,13 @@ export default class Home extends React.Component {
         const utmVal = utm.fromLatLon(lat, lng);
         const encoded = encodeUTM(utmVal);
         const geofence = getGeofence(lat, lng);
-        const test = decodeToUTM(new BigNumber('13145010604398440'));
-        console.log('asdsad', test);
+
+        checkAvailability(encoded).then(isAvailable => {
+          this.setState({
+            availability: !!isAvailable,
+            checkedBlock: encoded.toFixed(0)
+          })
+        })
 
         console.log(lng, lat, encoded.toFixed(0), geofence.map(bn => bn.toFixed(0)));
       });
@@ -146,6 +157,11 @@ export default class Home extends React.Component {
           Own your block of the earth
         </Headline>
         <PolySearch />
+        {this.state.checkedBlock &&
+          <Availability>
+            Block {this.state.checkedBlock} {this.state.availability && 'is' || 'is not '} available
+          </Availability>
+        }
         <div id="map" style={mapStyle} />
       </Container>
     )
@@ -164,3 +180,12 @@ const Headline = styled.h1`
   font-weight: 300;
   margin: 100px 0 10px;
 `
+
+const Availability = styled.div`
+  background: hsl(140, 69%, 51%);
+  margin: 34px 0 -25px;
+  padding: 10px 40px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  border: 2px solid hsl(140, 50%, 37%);
+`;
