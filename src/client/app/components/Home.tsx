@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import * as utm from 'utm';
 import encodeUTM from 'shared/encodeUTM';
 import getGeofence from 'shared/geofence';
+import BigNumber from 'bignumber.js';
 import PolySearch from './PolySearch.jsx';
+import decodeToUTM from 'shared/decode';
 
 export default class Home extends React.Component {
 
@@ -38,6 +40,8 @@ export default class Home extends React.Component {
         const utmVal = utm.fromLatLon(lat, lng);
         const encoded = encodeUTM(utmVal);
         const geofence = getGeofence(lat, lng);
+        const test = decodeToUTM(new BigNumber('13145010604398440'));
+        console.log('asdsad', test);
 
         console.log(lng, lat, encoded.toFixed(0), geofence.map(bn => bn.toFixed(0)));
       });
