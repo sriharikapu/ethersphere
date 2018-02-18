@@ -1,80 +1,29 @@
-<html lang="en">
-	<head>
-		<title></title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<style>
-			html {
-				height: 100%;
-			}
-			body {
-				height: 100%;
-				font-family: sans-serif;
-				line-height: 24px;
-			}
-			#search {
-				position: absolute;
-				width: 100%;
-				height: 34px;
-				text-align: center;
-			}
-			#results {
-				position: absolute;
-				top: 40px;
-				left: 8px;
-				width: 330px;
-				bottom: 0px;
-				vertical-align: top;
-			}
-			#results img {
-				margin-left: 8px;
-				cursor: pointer;
-			}
-				#results img:hover {
-					opacity: 0.8;
-				}
-			#viewer {
-				position: absolute;
-				top: 40px;
-				left: 340px;
-				right: 8px;
-				bottom: 72px;
-			}
-			#info {
-				position: absolute;
-				bottom: 10px;
-				left: 340px;
-				right: 0px;
-				padding-top: 6px;
-				text-align: center;
-			}
-			#asset_name {
-				font-size: 22px;
-				font-weight: bold;
-			}
-			#asset_author {
-				color: #888;
-			}
-		</style>
-	</head>
-	<body>
+import React from 'react';
+import styled from 'styled-components';
+import { debounce } from 'lodash'
+import { Flex, Box } from 'grid-styled'
 
-		<form id="search">
-			<input id="query" value="poly"></input>
-			<button id="button">search</button>
-		</form>
-		<span id="results"></span>
-		<span id="viewer"></span>
-		<div id="info">
-			<span id="asset_name">Title</span><br/>
-			by <span id="asset_author">Author</span>
-		</div>
+export default class PolySearch extends React.Component {
 
-		<script src="/vendor/three.js/js/three.min.js"></script>
-		<script src="/vendor/three.js/js/OBJLoader.js"></script>
-		<script src="/vendor/three.js/js/MTLLoader.js"></script>
-		<script>
-			// THREE.JS VIEWER
+  constructor() {
+    super()
+    this.state = {
+      queryValue: 'poly',
+      show: false,
+      loaded: false
+    }
+  }
+
+  load() {
+    if (this.state.loaded) return
+    // GOOGLE POLY CODE EXAMPLE
+      const THREE = window.THREE
+      const results = document.querySelector('#results')
+      const button = document.querySelector('#button')
+      const search = document.querySelector('#search')
+      const viewer = document.querySelector('#viewer')
+      const info = document.querySelector('#info')
+
 			const WIDTH = viewer.offsetWidth;
 			const HEIGHT = viewer.offsetHeight;
 
@@ -176,18 +125,123 @@
 				}
 			}
 
-			search.addEventListener( 'submit', function ( event ) {
+      search.addEventListener( 'submit', (event) => {
 				event.preventDefault()
-				searchPoly(query.value, onResults);
+				searchPoly(this.state.queryValue, onResults);
 			});
 
 			button.click();
+      this.setState({
+        loaded: true
+      })
+  }
 
-			if ( API_KEY.startsWith( '**' ) ) {
+  handleQueryChange(event) {
+    this.setState({
+      queryValue: event.target.value
+    })
+  }
 
-				alert( 'Sample incorrectly set up. Please enter your API Key for the Poly API in the API_KEY variable.' );
+  handleToggle(event) {
+    event.preventDefault()
+    this.setState({
+      show: !this.state.show
+    }, () => {
+      this.load()
+    })
+  }
 
-			}
-		</script>
-	</body>
-</html>
+  render() {
+    const { queryValue, show } = this.state
+
+    return (
+      <Container>
+        <Toggler onClick={event => this.handleToggle(event)}>Search objects</Toggler>
+        {show &&
+        <ToggleContainer>
+          <SearchForm id="search">
+            <Query id="query" value={queryValue} onChange={event => this.handleQueryChange(event)} />
+            <SubmitButton id="button">search</SubmitButton>
+          </SearchForm>
+          <Flex>
+            <Box width={1/2}>
+              <Results id="results"></Results>
+            </Box>
+            <Box width={1/2}>
+              <Viewer id="viewer"></Viewer>
+            </Box>
+          </Flex>
+          <Info id="info">
+            <span id="asset_name">Title</span>
+            by <span id="asset_author">Author</span>
+          </Info>
+        </ToggleContainer>}
+      </Container>
+    )
+  }
+}
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 40px;
+`
+
+const Toggler = styled.a`
+  cursor: pointer;
+  color: #475a84;
+`
+
+const ToggleContainer = styled.div`
+  display: block;
+`
+
+const SearchForm = styled.form`
+  display: block;
+`
+
+const Results = styled.div`
+  display: block;
+  width: 330px;
+  bottom: 0px;
+  vertical-align: top;
+
+  & img {
+    margin-left: 8px;
+    cursor: pointer;
+  }
+  & img:hover {
+    opacity: 0.8;
+  }
+`
+
+const Viewer = styled.div`
+  display: block;
+  width: 400px;
+  height: 400px;
+`
+
+const Info = styled.div`
+  padding-top: 6px;
+  text-align: center;
+  display: none;
+`
+
+const Query = styled.input`
+  border: 0;
+  padding: 10px;
+  background: #00000073;
+  color: #fff;
+  font-size: 16px;
+  width: 200px;
+`;
+
+const SubmitButton = styled.button`
+  -webkit-appearance: none;
+  border: 0;
+  padding: 10px;
+  font-size: 16px;
+  background: #000000a1;
+  color: #ffffff54;
+`

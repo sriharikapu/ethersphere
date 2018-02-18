@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PolySearch from './PolySearch.jsx';
 
 export default class Home extends React.Component {
 
@@ -69,6 +70,7 @@ export default class Home extends React.Component {
         <Headline>
           Own your block of the earth
         </Headline>
+        <PolySearch />
         <div id="map" style={mapStyle} />
       </Container>
     )
