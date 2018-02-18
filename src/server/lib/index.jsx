@@ -12,6 +12,8 @@ function Index({ preloadedState, path }) {
         <title>Ξthersphere</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0" />
         <script src="/vendor/keythereum.min.js" />
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js' />
+        <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
       </head>
       <body>
         <div id="app" />

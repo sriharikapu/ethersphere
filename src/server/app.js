@@ -79,6 +79,7 @@ app.use(session({
  * Initialize api
  */
 require('server/api');
+require('server/api/messages')
 
 /**
  * Setup logging
