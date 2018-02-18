@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { debounce } from 'lodash'
 import { Flex, Box } from 'grid-styled'
+import { uploadFromUrl } from '../lib/ipfs'
 
 export default class PolySearch extends React.Component {
 
@@ -10,7 +11,8 @@ export default class PolySearch extends React.Component {
     this.state = {
       queryValue: 'poly',
       show: false,
-      loaded: false
+      loaded: false,
+      ipfsHash: null
     }
   }
 
@@ -59,20 +61,32 @@ export default class PolySearch extends React.Component {
 				var url = `https://poly.googleapis.com/v1/assets?keywords=${keywords}&format=OBJ&key=${API_KEY}`;
 				var request = new XMLHttpRequest();
 				request.open( 'GET', url, true );
-				request.addEventListener( 'load', function ( event ) {
+        request.addEventListener( 'load', async (event) => {
 					onLoad( JSON.parse( event.target.response ) );
 				});
-				request.send( null );
+				request.send(null);
 			}
 
-			function createImage( asset ) {
+      const createImage = asset => {
 				var image = document.createElement( 'img' );
 				image.src = asset.thumbnail.url;
 				image.style.width = '100px';
 				image.style.height = '75px';
 				var format = asset.formats.find( format => { return format.formatType === 'OBJ'; } );
 				if (format !== undefined) {
-					image.onclick = function () {
+          image.onclick = async () => {
+          this.setState({
+            ipfsHash : null
+          }, async () => {
+            const assetUri = format.root.url
+            const hashes = await uploadFromUrl(assetUri)
+            if (hashes.length) {
+              this.setState({
+                ipfsHash : hashes[0].hash
+              })
+            }
+          })
+
 						// Remove previous results
 						while ( container.children.length ) {
 							container.remove( container.children[ 0 ] );
@@ -152,11 +166,12 @@ export default class PolySearch extends React.Component {
   }
 
   render() {
-    const { queryValue, show } = this.state
+    const { queryValue, show, ipfsHash } = this.state
 
     return (
       <Container>
         <Toggler onClick={event => this.handleToggle(event)}>Search objects</Toggler>
+        {ipfsHash}
         {show &&
         <ToggleContainer>
           <SearchForm id="search">
