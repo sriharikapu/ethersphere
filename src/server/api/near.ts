@@ -23,27 +23,31 @@ export default async function(req, res) {
     for (let i = 0; i < blocksToCheck.length; i++) {
       const blockId = blocksToCheck[i];
 			const cacheKey = blockId.toString(10)
-			if (cache[cacheKey] != undefined) {
-				matches.push(cache[cacheKey])
+			console.log(cache[cacheKey], cacheKey)
+			if (typeof cache[cacheKey] !== 'undefined') {
+				if (cache[cacheKey] != null) {
+					matches.push(cache[cacheKey])
+				}
 				continue
 			}
 
       const name = await contract.methods.dataName(blockId).call({ from: '0x2B981863A0FBf4e07c8508623De8Bd6d4b28419C'});
 
       console.log(blockId, name)
+			let result = null
       if (name) {
         const { easting, northing, zoneNum, zoneLetter } = decode(blockId);
         const coords = utm.toLatLon(easting, northing, zoneNum, zoneLetter);
+				result = {
+					lat: coords.latitude,
+					lng: coords.longitude,
+					message: name
+				}
 
-				const result = {
-          lat: coords.latitude,
-          lng: coords.longitude,
-          message: name
-        }
-
-				cache[cacheKey] = result
         matches.push(result)
       }
+
+			cache[cacheKey] = result
     }
 
     return res.status(200).send(matches);
