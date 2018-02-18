@@ -23,7 +23,6 @@ export default async function(req, res) {
     for (let i = 0; i < blocksToCheck.length; i++) {
       const blockId = blocksToCheck[i];
 			const cacheKey = blockId.toString(10)
-			console.log(cache[cacheKey], cacheKey)
 			if (typeof cache[cacheKey] !== 'undefined') {
 				if (cache[cacheKey] != null) {
 					matches.push(cache[cacheKey])
