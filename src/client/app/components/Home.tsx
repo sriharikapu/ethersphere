@@ -5,9 +5,21 @@ import encodeUTM from 'shared/encodeUTM';
 import getGeofence from 'shared/geofence';
 import BigNumber from 'bignumber.js';
 import PolySearch from './PolySearch.jsx';
+import NewBlockForm from 'client/app/components/NewBlockForm';
 import decodeToUTM from 'shared/decode';
 
-export default class Home extends React.Component {
+interface Props {
+}
+
+interface State {
+  latlngkey: string;
+}
+
+export default class Home extends React.Component<Props, State> {
+
+  state = {
+    latlngkey: null,
+  }
 
   componentDidMount() {
     (window as any).mapboxgl.accessToken = 'pk.eyJ1IjoiY29vcGVybSIsImEiOiJjamRyNGd4a3MwNXJuMnFueXZxbnowajJ5In0.5SoId28cDuTqHPRP_2iA2w';
@@ -44,6 +56,9 @@ export default class Home extends React.Component {
         console.log('asdsad', test);
 
         console.log(lng, lat, encoded.toFixed(0), geofence.map(bn => bn.toFixed(0)));
+        this.setState({
+          latlngkey: encoded.toFixed(0)
+        })
       });
 
       map.addLayer({
@@ -134,6 +149,8 @@ export default class Home extends React.Component {
   }
 
   render() {
+    const { latlngkey } = this.state
+
     const mapStyle = {
       width: '100%',
       height: '500px',
@@ -146,6 +163,7 @@ export default class Home extends React.Component {
           Own your block of the earth
         </Headline>
         <PolySearch />
+        <NewBlockForm latlngkey={latlngkey} />
         <div id="map" style={mapStyle} />
       </Container>
     )
