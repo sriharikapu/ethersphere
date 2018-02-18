@@ -75,6 +75,7 @@ export default class PolySearch extends React.Component {
 				var format = asset.formats.find( format => { return format.formatType === 'OBJ'; } );
 				if (format !== undefined) {
           image.onclick = async () => {
+            try {
           this.setState({
             ipfsHash : null
           }, async () => {
@@ -86,6 +87,9 @@ export default class PolySearch extends React.Component {
               })
             }
           })
+            } catch (error) {
+
+            }
 
 						// Remove previous results
 						while ( container.children.length ) {
