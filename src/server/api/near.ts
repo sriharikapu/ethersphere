@@ -34,7 +34,7 @@ export default async function(req, res) {
         const { easting, northing, zoneNum, zoneLetter } = decode(blockId);
         const coords = utm.toLatLon(easting, northing, zoneNum, zoneLetter);
 
-				var result = {
+				const result = {
           lat: coords.latitude,
           lng: coords.longitude,
           message: name
