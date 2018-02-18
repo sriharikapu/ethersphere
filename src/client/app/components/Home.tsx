@@ -70,7 +70,7 @@ export default class Home extends React.Component<Props, State> {
 
       map.on('click', (e) => {
         const { lng, lat } = e.lngLat;
-        const utmVal = utm.fromLatLon(39.7322235107422, -104.987350463867);
+        const utmVal = utm.fromLatLon(lat, lng);
         const encoded = encodeUTM(utmVal);
         const geofence = getGeofence(lat, lng);
 
