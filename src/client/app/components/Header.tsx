@@ -5,11 +5,14 @@ import { Link } from 'react-router-dom';
 export default function Header() {
   return (
     <Container>
-      <Title>
-        ΞTHERSPHERE
-      </Title>
+      <Link to="/" style={{
+        textDecoration: 'none'
+      }}>
+        <Title>
+          ΞTHERSPHERE
+        </Title>
+      </Link>
       <Navigation>
-        <NavLink to="/explore">Explore</NavLink>
         <NavLink to="/manage">My Blocks</NavLink>
       </Navigation>
     </Container>
@@ -26,6 +29,7 @@ const Title = styled.span`
   color: white;
   font-size: 29px;
   font-weight: 300;
+  text-decoration: none;
   & > strong {
     font-weight: 400;
   }
