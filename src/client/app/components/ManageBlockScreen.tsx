@@ -5,11 +5,18 @@ import get from 'lodash/get';
 export default class ManageBlockScreen extends React.Component {
 
   componentDidMount() {
+    try {
+      this.fetchData()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async fetchData() {
     const address = get((window as any), 'metamaskProvider.publicConfigStore._state.selectedAddress', null);
     console.log(address);
 
-    fetchBlocksByOwner(address).then(console.log);
-
+    const blocks = await fetchBlocksByOwner(address)
   }
 
   render() {
