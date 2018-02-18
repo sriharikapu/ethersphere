@@ -22,8 +22,9 @@ export default async function(req, res) {
     const matches = [];
     for (let i = 0; i < blocksToCheck.length; i++) {
       const blockId = blocksToCheck[i];
-			if (cache[blockId.toString(10)] != undefined) {
-				matches.push(cache[blockId.toString(10)])
+			const cacheKey = blockId.toString(10)
+			if (cache[cacheKey] != undefined) {
+				matches.push(cache[cacheKey])
 				continue
 			}
 
@@ -40,8 +41,7 @@ export default async function(req, res) {
           message: name
         }
 
-				cache[blockId.toString(10)] = result
-
+				cache[cacheKey] = result
         matches.push(result)
       }
     }
