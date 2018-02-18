@@ -5,10 +5,22 @@ import encodeUTM from 'shared/encodeUTM';
 import getGeofence from 'shared/geofence';
 import BigNumber from 'bignumber.js';
 import PolySearch from './PolySearch.jsx';
+import NewBlockForm from 'client/app/components/NewBlockForm';
 import decodeToUTM from 'shared/decode';
 import checkAvailability from 'shared/checkAvailability';
 
-export default class Home extends React.Component {
+interface Props {
+}
+
+interface State {
+  latlngkey: string;
+}
+
+export default class Home extends React.Component<Props, State> {
+
+  state = {
+    latlngkey: null,
+  }
 
   state = {
     availability: false,
@@ -55,6 +67,9 @@ export default class Home extends React.Component {
         })
 
         console.log(lng, lat, encoded.toFixed(0), geofence.map(bn => bn.toFixed(0)));
+        this.setState({
+          latlngkey: encoded.toFixed(0)
+        })
       });
 
       map.addLayer({
@@ -145,6 +160,8 @@ export default class Home extends React.Component {
   }
 
   render() {
+    const { latlngkey } = this.state
+
     const mapStyle = {
       width: '100%',
       height: '500px',
@@ -157,11 +174,15 @@ export default class Home extends React.Component {
           Own your block of the earth
         </Headline>
         <PolySearch />
+<<<<<<< HEAD
         {this.state.checkedBlock &&
           <Availability>
             Block {this.state.checkedBlock} {this.state.availability && 'is' || 'is not '} available
           </Availability>
         }
+=======
+        <NewBlockForm latlngkey={latlngkey} />
+>>>>>>> post new block
         <div id="map" style={mapStyle} />
       </Container>
     )
