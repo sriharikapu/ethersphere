@@ -2,10 +2,10 @@
 .env
 .tmp/
 node_modules/
-#public/bundle.js
+public/bundle.js
 /public/bundle.js.map
-#dist/
-#server.js
+dist/
+server.js
 .idea
 yarn-error.log
 /npm-debug.log
