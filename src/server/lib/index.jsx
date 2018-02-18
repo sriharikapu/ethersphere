@@ -20,6 +20,9 @@ function Index({ preloadedState, path }) {
         <script dangerouslySetInnerHTML={{ __html: `
           window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')};
           `}} />
+        <script src="/vendor/three.js/js/three.min.js"></script>
+        <script src="/vendor/three.js/js/OBJLoader.js"></script>
+        <script src="/vendor/three.js/js/MTLLoader.js"></script>
         <script src="/bundle.js" />
       </body>
     </html>

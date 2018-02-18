@@ -1,5 +1,6 @@
-const request = require('request-promise')
+const request = require('browser-request')
 const ipfsApi = require('ipfs-api')
+const { promisify } = require('bluebird')
 
 function ipfsUrl(hash) {
   //return `https://gateway.ipfs.io/ipfs/${hash}`
@@ -10,7 +11,7 @@ async function getJson (ipfsHash) {
   let json = {}
 
   try {
-    json = await request({
+    json = await promisify(request)({
       url: ipfsUrl(ipfsHash),
       json: true
     })

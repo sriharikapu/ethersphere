@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import * as utm from 'utm';
 import encodeUTM from 'shared/encodeUTM';
 import getGeofence from 'shared/geofence';
+import PolySearch from './PolySearch.jsx';
 
 export default class Home extends React.Component {
 
@@ -140,6 +141,7 @@ export default class Home extends React.Component {
         <Headline>
           Own your block of the earth
         </Headline>
+        <PolySearch />
         <div id="map" style={mapStyle} />
       </Container>
     )
