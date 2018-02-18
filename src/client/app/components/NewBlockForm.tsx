@@ -86,7 +86,7 @@ export default class NewBlockForm extends React.Component<any, any> {
     try {
       if (photoUrl) {
         const hashes = await uploadFromUrl(photoUrl)
-        if ((hashes as any).length) {
+        if (hashes && (hashes as any).length) {
           photoIpfsHash = hashes[0].hash
         }
       }
@@ -118,11 +118,14 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 40px;
+  width: 100%;
 `
 
 const Form = styled.form`
   display: block;
-  margin-top: 20px;
+  margin: 20px auto 0 auto;
+  width: 100%;
+  max-width: 300px;
 `
 
 const TxHash = styled.div`
@@ -136,21 +139,26 @@ const TxHash = styled.div`
 `
 
 const Input = styled.input`
-  display: inline-block;
+  margin-bottom: 10px;
+  display: block;
   border: 0;
   padding: 10px;
-  background: #00000073;
+  background: #2e3442;
   color: #fff;
   font-size: 16px;
-  width: 200px;
+  width: 100%;
 `
 
 const Button = styled.button`
-  display: inline-block;
+  display: block;
+  width: 100%;
   -webkit-appearance: none;
   border: 0;
-  padding: 10px;
   font-size: 16px;
-  background: #000000a1;
-  color: #ffffff54;
+  padding: 10px;
+  background: #366f88a1;
+  color: #ffffff8c;
+  &:hover {
+    cursor: pointer;
+  }
 `
