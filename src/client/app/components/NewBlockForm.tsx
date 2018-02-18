@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import * as utm from 'utm';
 import encodeUTM from 'shared/encodeUTM';
 import BigNumber from 'bignumber.js';
-import abi from 'server/lib/ethereum/abi';
+import abi from 'shared/ethereum/abi';
 import Web3 from 'web3';
 import settings from 'settings';
 

@@ -51,11 +51,18 @@ const app = React.createElement(
 );
 const rootElement = document.getElementById('app');
 
+if((window as any).web3 !== 'undefined') {
+  (window as any).metamaskProvider = (window as any).web3.currentProvider;
+  (window as any).w3 = (window as any).web3;
+}
+
 ReactDOM.render(app, rootElement, onRendered);
 
 // Anything that is lower priority than getting the app rendered should go here.
 function onRendered() {
   bindReduxResizeListener(store);
+
+
 
   (window as any).web3 = new Web3(new Web3.providers.HttpProvider(settings.ETHEREUM_NODE_URL));
 }

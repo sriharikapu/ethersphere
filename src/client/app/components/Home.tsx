@@ -14,15 +14,14 @@ interface Props {
 
 interface State {
   latlngkey: string;
+  availability: boolean;
+  checkedBlock: string;
 }
 
 export default class Home extends React.Component<Props, State> {
 
   state = {
     latlngkey: null,
-  }
-
-  state = {
     availability: false,
     checkedBlock: ''
   }
@@ -55,9 +54,10 @@ export default class Home extends React.Component<Props, State> {
 
       map.on('click', (e) => {
         const { lng, lat } = e.lngLat;
-        const utmVal = utm.fromLatLon(lat, lng);
+        const utmVal = utm.fromLatLon(39.7322235107422, -104.987350463867);
         const encoded = encodeUTM(utmVal);
         const geofence = getGeofence(lat, lng);
+
 
         checkAvailability(encoded).then(isAvailable => {
           this.setState({
@@ -174,15 +174,12 @@ export default class Home extends React.Component<Props, State> {
           Own your block of the earth
         </Headline>
         <PolySearch />
-<<<<<<< HEAD
         {this.state.checkedBlock &&
           <Availability>
             Block {this.state.checkedBlock} {this.state.availability && 'is' || 'is not '} available
           </Availability>
         }
-=======
         <NewBlockForm latlngkey={latlngkey} />
->>>>>>> post new block
         <div id="map" style={mapStyle} />
       </Container>
     )
